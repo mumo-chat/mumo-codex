@@ -17,6 +17,8 @@ Honest postmortem on what unblocked discovery: somewhere across v0.3.0 → v0.3.
 
 Manifest fix from comparing against OpenAI's bundled `computer-use` plugin. `plugin.json` now points at the root `.mcp.json` via `mcpServers: "./.mcp.json"`; without that pointer, Codex can discover the plugin shell but may not attach the MCP server/tools.
 
+This corrects v0.3.1's removal of the same field. v0.3.1's reasoning was that OpenAI's `browser-use` plugin doesn't include `mcpServers` in its manifest, so the field looked optional. Sampling a second OpenAI-bundled plugin (`computer-use`) showed `browser-use` is the outlier, and Codex MCP plugins do need the explicit pointer in practice — `browser-use` may have a non-MCP path for its tools, or be relying on a default that doesn't apply to remote HTTP servers. Either way, the v0.3.1 entry's "Codex auto-discovers `.mcp.json` at the plugin root" claim was wrong; treat that line as historical/incorrect.
+
 ## 0.3.1 — 2026-05-05
 
 `plugin.json` schema fixes from comparing to OpenAI's `browser-use` plugin manifest at `~/.codex/.tmp/bundled-marketplaces/openai-bundled/plugins/browser-use/.codex-plugin/plugin.json`. Three diffs from the canonical shape:
