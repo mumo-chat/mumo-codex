@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 — 2026-05-05
+
+Setup-doc fix and version reconciliation.
+
+- **README:** added the `npm i -g @openai/codex` prerequisite to step 3. The Codex CLI ships separately from the IDE extension; users who only had the IDE installed hit `zsh: command not found: codex` on the marketplace command.
+- **`plugin.json` version:** bumped to `0.1.2` so the plugin manifest matches the CHANGELOG. Through 0.1.1 the manifest read `0.1.0` because the prior bump (launchctl docs) didn't touch behavior. From here on, every CHANGELOG entry comes with a manifest bump.
+
 ## 0.1.1 — 2026-05-05
 
 macOS GUI-launch fix in setup docs. Pure documentation; no skill or manifest behavior change.

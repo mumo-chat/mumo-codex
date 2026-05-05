@@ -31,6 +31,14 @@ Optional: also add `export MUMO_API_KEY=mmo_live_YOUR_KEY_HERE` to `~/.zshrc` if
 
 ### 3. Install the plugin
 
+If you don't have the Codex CLI yet, install it from npm:
+
+```bash
+npm i -g @openai/codex
+```
+
+Then add the plugin from GitHub:
+
 ```bash
 codex plugin marketplace add github:mumo-chat/mumo-codex
 ```
