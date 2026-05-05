@@ -29,7 +29,7 @@ launchctl setenv MUMO_API_KEY mmo_live_YOUR_KEY_HERE
 
 Optional: also add `export MUMO_API_KEY=mmo_live_YOUR_KEY_HERE` to `~/.zshrc` if you want terminal sessions to have the key too.
 
-### 3. Install the plugin
+### 3. Add the mumo marketplace
 
 If you don't have the Codex CLI yet, install it from npm:
 
@@ -37,7 +37,7 @@ If you don't have the Codex CLI yet, install it from npm:
 npm i -g @openai/codex
 ```
 
-Then add the plugin from GitHub:
+Then register the marketplace:
 
 ```bash
 codex plugin marketplace add mumo-chat/mumo-codex
@@ -50,9 +50,29 @@ git clone https://github.com/mumo-chat/mumo-codex
 codex plugin marketplace add ./mumo-codex
 ```
 
-### 4. Restart Codex
+This adds `[marketplaces.mumo]` to `~/.codex/config.toml`. **Adding the marketplace does not auto-enable the plugin** — that's the next step.
 
-Restart Codex (CLI or IDE extension) so the MCP server registers and `MUMO_API_KEY` propagates. After restart, the seven mumo tools become available: `create_deliberation`, `wait_for_round`, `append_round`, `get_session`, `list_sessions`, `list_models`, `get_credit`.
+### 4. Enable the mumo plugin
+
+Open Codex's plugin browser and install/enable mumo from it:
+
+```bash
+codex /plugins
+```
+
+When enabled, `~/.codex/config.toml` ends up with `[plugins."mumo@mumo"]` + `enabled = true`.
+
+**Fallback:** if the plugin browser isn't enabling mumo on your Codex build, you can register the MCP server directly. This gives you the seven mumo tools but skips the skill (the agent loses the deliberation-loop instructions and has to discover the tools on its own):
+
+```bash
+codex mcp add mumo \
+  --url https://mumo.chat/api/mcp \
+  --bearer-token-env-var MUMO_API_KEY
+```
+
+### 5. Restart Codex
+
+Restart Codex (CLI or IDE extension) so the MCP server registers and `MUMO_API_KEY` propagates. After restart, the seven mumo tools become available: `create_deliberation`, `wait_for_round`, `append_round`, `get_session`, `list_sessions`, `list_models`, `get_credit`. Verify with `codex mcp list`.
 
 ## Using the panel
 

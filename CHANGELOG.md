@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.2 — 2026-05-05
+
+Install docs fix. Adding the marketplace and enabling the plugin are two distinct steps in Codex; v0.2.x docs conflated them, so users who ran `codex plugin marketplace add mumo-chat/mumo-codex` and then restarted saw zero mumo tools — the plugin sat in the marketplace catalog but was never enabled.
+
+- **README + install page:** step 3 (Add the marketplace) and step 4 (Enable the plugin via `codex /plugins`) are now separate. `[plugins."mumo@mumo"]` + `enabled = true` is what the user is verifying landed in `~/.codex/config.toml`.
+- **Fallback path documented:** for Codex builds where the plugin browser doesn't enable mumo correctly, `codex mcp add mumo --url https://mumo.chat/api/mcp --bearer-token-env-var MUMO_API_KEY` registers the MCP server directly. Tools surface but the skill is skipped — the agent loses the deliberation-loop instructions and has to discover the tools on its own.
+- **`codex mcp list`** added to step 5 as the verification step.
+
 ## 0.2.1 — 2026-05-05
 
 `marketplace.json` moved to its canonical path `.agents/plugins/marketplace.json` (was at repo root in v0.2.0; Codex still rejected it with `marketplace root does not contain a supported manifest`). Plugin moved alongside it at `.agents/plugins/mumo/`. `source.path` is now `./mumo` (relative to `.agents/plugins/`).
