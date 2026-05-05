@@ -1,0 +1,16 @@
+interface:
+  display_name: "mumo"
+  short_description: "Multi-model deliberation panel for high-regret decisions"
+  brand_color: "#7C6F9F"
+  default_prompt: "Ask mumo to compare the tradeoffs and tell me where the panel disagrees."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "mumo"
+      description: "mumo deliberation server — multi-model panel via Streamable HTTP"
+      transport: "streamable_http"
+      url: "https://mumo.chat/api/mcp"
