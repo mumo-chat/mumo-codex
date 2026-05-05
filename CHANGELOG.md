@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2 — 2026-05-05
+
+Manifest fix from comparing against OpenAI's bundled `computer-use` plugin. `plugin.json` now points at the root `.mcp.json` via `mcpServers: "./.mcp.json"`; without that pointer, Codex can discover the plugin shell but may not attach the MCP server/tools.
+
 ## 0.3.1 — 2026-05-05
 
 `plugin.json` schema fixes from comparing to OpenAI's `browser-use` plugin manifest at `~/.codex/.tmp/bundled-marketplaces/openai-bundled/plugins/browser-use/.codex-plugin/plugin.json`. Three diffs from the canonical shape:
