@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 — 2026-05-05
+
+Two install-blocker fixes from first user attempt. Structural; the install command shape changes.
+
+- **Repo is now a marketplace, not a bare plugin.** `codex plugin marketplace add owner/repo` requires the repo root to contain a `marketplace.json` listing one or more plugins; v0.1.x failed at install with `marketplace root does not contain a supported manifest`. The plugin moved into `plugins/mumo/` and `marketplace.json` at the repo root references it via `source.path: "./plugins/mumo"`.
+- **Wrong marketplace-source format in README.** v0.1.x used `codex plugin marketplace add github:mumo-chat/mumo-codex`. The CLI accepts `owner/repo`, a full git URL, or a local path — no `github:` shorthand. README and install page now use `codex plugin marketplace add mumo-chat/mumo-codex`. Original form was copied from a planning doc without verifying against the actual CLI parser.
+- **Plugin manifest** bumped to `0.2.0` to match the structural change.
+
 ## 0.1.2 — 2026-05-05
 
 Setup-doc fix and version reconciliation.

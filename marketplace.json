@@ -1,0 +1,23 @@
+{
+  "name": "mumo",
+  "interface": {
+    "displayName": "mumo",
+    "shortDescription": "Multi-model deliberation panel for high-regret decisions",
+    "developerName": "mumo",
+    "websiteURL": "https://mumo.chat"
+  },
+  "plugins": [
+    {
+      "name": "mumo",
+      "source": {
+        "source": "local",
+        "path": "./plugins/mumo"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

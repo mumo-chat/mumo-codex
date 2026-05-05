@@ -40,7 +40,7 @@ npm i -g @openai/codex
 Then add the plugin from GitHub:
 
 ```bash
-codex plugin marketplace add github:mumo-chat/mumo-codex
+codex plugin marketplace add mumo-chat/mumo-codex
 ```
 
 Or from a local clone:
