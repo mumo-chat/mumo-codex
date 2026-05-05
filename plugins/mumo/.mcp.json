@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "mumo": {
+      "url": "https://mumo.chat/api/mcp",
+      "bearer_token_env_var": "MUMO_API_KEY",
+      "enabled_tools": [
+        "create_deliberation",
+        "wait_for_round",
+        "append_round",
+        "get_session",
+        "list_sessions",
+        "list_models",
+        "get_credit"
+      ]
+    }
+  }
+}

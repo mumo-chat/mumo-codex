@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 — 2026-05-05
+
+Three structural fixes from inspecting OpenAI's bundled marketplace at `~/.codex/.tmp/bundled-marketplaces/openai-bundled` (canonical Codex format on disk; the published docs are partially aspirational). v0.2.x had Codex registering the marketplace but listing zero plugins from it; this fixes that.
+
+- **Plugin moved to repo-root `plugins/<name>/`.** v0.2.x kept the plugin under `.agents/plugins/mumo/` next to `marketplace.json`. OpenAI's bundled marketplace puts plugins at `plugins/<name>/` (repo root) with `marketplace.json` separately at `.agents/plugins/marketplace.json`. The Codex docs implied plugin paths resolve relative to `marketplace.json`'s directory; they actually resolve relative to **repo root**. So our v0.2.x `source.path: "./mumo"` was looking for `<repo>/mumo/`, which didn't exist, and Codex silently dropped the plugin.
+- **`source.path` now `./plugins/mumo`** to match the new layout (and OpenAI's convention).
+- **`.mcp.json` now wraps in `mcpServers`.** Was `{"mumo": {...}}`, now `{"mcpServers": {"mumo": {...}}}`. The Codex docs showed both forms; the bundled examples uniformly use the wrapped form.
+- **`interface.defaultPrompt` is an array.** Was a string; OpenAI bundled manifests use an array. Codex may accept the string but matching the canonical shape removes a guessing axis.
+- **NOT switching to `.claude-plugin/`.** Codex tries to parse Claude Code marketplaces but logs `unsupported source` for several entries. Claude shape is back-compat, not native. We stay on `.codex-plugin/plugin.json`.
+
 ## 0.2.2 — 2026-05-05
 
 Install docs fix. Adding the marketplace and enabling the plugin are two distinct steps in Codex; v0.2.x docs conflated them, so users who ran `codex plugin marketplace add mumo-chat/mumo-codex` and then restarted saw zero mumo tools — the plugin sat in the marketplace catalog but was never enabled.

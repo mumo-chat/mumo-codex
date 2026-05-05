@@ -1,6 +1,6 @@
 {
   "name": "mumo",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Multi-model deliberation panel — Claude, GPT, Gemini, Grok, Qwen, Kimi, GLM via mumo's MCP server.",
   "author": "mumo",
   "license": "MIT",
@@ -18,6 +18,8 @@
     "websiteURL": "https://mumo.chat",
     "privacyPolicyURL": "https://mumo.chat/legal/privacy",
     "termsOfServiceURL": "https://mumo.chat/legal/terms",
-    "defaultPrompt": "Ask mumo to compare the tradeoffs and tell me where the panel disagrees."
+    "defaultPrompt": [
+      "Ask mumo to compare the tradeoffs and tell me where the panel disagrees."
+    ]
   }
 }
