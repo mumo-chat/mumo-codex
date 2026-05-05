@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.1 — 2026-05-05
+
+`plugin.json` schema fixes from comparing to OpenAI's `browser-use` plugin manifest at `~/.codex/.tmp/bundled-marketplaces/openai-bundled/plugins/browser-use/.codex-plugin/plugin.json`. Three diffs from the canonical shape:
+
+- **`author` is an object, not a string.** Was `"author": "mumo"`, now `"author": {"name": "mumo"}`. OpenAI's manifest uses the object form, and any strict JSON-schema validator rejects a string here. This is the most likely fatal validation diff.
+- **Removed top-level `mcpServers` field.** OpenAI's `browser-use` doesn't reference `.mcp.json` from the manifest; Codex auto-discovers `.mcp.json` at the plugin root. Keeping the manifest field around could be either ignored or rejected depending on schema strictness.
+- **Added `interface.capabilities: ["Interactive"]`.** OpenAI uses `["Interactive", "Read", "Write"]`; we declare just `Interactive` since mumo surfaces tools the agent invokes — no filesystem reads/writes from the plugin itself.
+- **Added `interface.screenshots: []`** to match OpenAI's shape.
+
 ## 0.3.0 — 2026-05-05
 
 Three structural fixes from inspecting OpenAI's bundled marketplace at `~/.codex/.tmp/bundled-marketplaces/openai-bundled` (canonical Codex format on disk; the published docs are partially aspirational). v0.2.x had Codex registering the marketplace but listing zero plugins from it; this fixes that.

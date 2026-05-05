@@ -1,25 +1,28 @@
 {
   "name": "mumo",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Multi-model deliberation panel — Claude, GPT, Gemini, Grok, Qwen, Kimi, GLM via mumo's MCP server.",
-  "author": "mumo",
+  "author": {
+    "name": "mumo"
+  },
   "license": "MIT",
   "homepage": "https://mumo.chat",
   "repository": "https://github.com/mumo-chat/mumo-codex",
   "keywords": ["deliberation", "multi-model", "mcp", "decision-support", "agents"],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "mumo",
     "shortDescription": "Multi-model deliberation for high-regret decisions",
     "longDescription": "When your local agent is decision-bound by its backbone model's confidence, mumo gives it on-demand access to a panel of frontier models — Claude, GPT, Gemini, Grok, Qwen, Kimi, GLM — for the hard calls. Useful for contested architecture decisions, design review, pre-launch pressure tests, and any time the cost of being wrong exceeds the cost of deliberation.",
     "developerName": "mumo",
     "category": "Productivity",
+    "capabilities": ["Interactive"],
     "websiteURL": "https://mumo.chat",
     "privacyPolicyURL": "https://mumo.chat/legal/privacy",
     "termsOfServiceURL": "https://mumo.chat/legal/terms",
     "defaultPrompt": [
       "Ask mumo to compare the tradeoffs and tell me where the panel disagrees."
-    ]
+    ],
+    "screenshots": []
   }
 }
