@@ -11,7 +11,7 @@
       "name": "mumo",
       "source": {
         "source": "local",
-        "path": "./plugins/mumo"
+        "path": "./mumo"
       },
       "policy": {
         "installation": "AVAILABLE",

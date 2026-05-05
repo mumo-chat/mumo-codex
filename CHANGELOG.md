@@ -1,10 +1,14 @@
 # Changelog
 
+## 0.2.1 — 2026-05-05
+
+`marketplace.json` moved to its canonical path `.agents/plugins/marketplace.json` (was at repo root in v0.2.0; Codex still rejected it with `marketplace root does not contain a supported manifest`). Plugin moved alongside it at `.agents/plugins/mumo/`. `source.path` is now `./mumo` (relative to `.agents/plugins/`).
+
 ## 0.2.0 — 2026-05-05
 
 Two install-blocker fixes from first user attempt. Structural; the install command shape changes.
 
-- **Repo is now a marketplace, not a bare plugin.** `codex plugin marketplace add owner/repo` requires the repo root to contain a `marketplace.json` listing one or more plugins; v0.1.x failed at install with `marketplace root does not contain a supported manifest`. The plugin moved into `plugins/mumo/` and `marketplace.json` at the repo root references it via `source.path: "./plugins/mumo"`.
+- **Repo is now a marketplace, not a bare plugin.** `codex plugin marketplace add owner/repo` requires the repo to contain a `marketplace.json` listing one or more plugins; v0.1.x failed at install with `marketplace root does not contain a supported manifest`. (v0.2.0 placed it at repo root; v0.2.1 moves it to the canonical `.agents/plugins/marketplace.json` after that didn't resolve the error.) The plugin moved into `plugins/mumo/` and `marketplace.json` at the repo root references it via `source.path: "./plugins/mumo"`.
 - **Wrong marketplace-source format in README.** v0.1.x used `codex plugin marketplace add github:mumo-chat/mumo-codex`. The CLI accepts `owner/repo`, a full git URL, or a local path — no `github:` shorthand. README and install page now use `codex plugin marketplace add mumo-chat/mumo-codex`. Original form was copied from a planning doc without verifying against the actual CLI parser.
 - **Plugin manifest** bumped to `0.2.0` to match the structural change.
 

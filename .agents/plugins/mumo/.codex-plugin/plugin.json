@@ -1,6 +1,6 @@
 {
   "name": "mumo",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Multi-model deliberation panel — Claude, GPT, Gemini, Grok, Qwen, Kimi, GLM via mumo's MCP server.",
   "author": "mumo",
   "license": "MIT",
