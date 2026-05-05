@@ -19,13 +19,15 @@ For Claude Code, see [`mumo-chat/mumo-mcp`](https://github.com/mumo-chat/mumo-mc
 
 Sign up at [mumo.chat](https://mumo.chat) and create a platform key at [Settings → API Keys](https://mumo.chat/settings/api-keys). Keys start with `mmo_live_`.
 
-### 2. Export the key
+### 2. Set MUMO_API_KEY for Codex
+
+The plugin's `.mcp.json` declares `bearer_token_env_var: MUMO_API_KEY`, which tells Codex to read the token from your environment. On macOS, set it from Terminal so the Codex IDE extension launched from Finder/Dock inherits it (GUI apps don't read your shell profile):
 
 ```bash
-export MUMO_API_KEY=mmo_live_YOUR_KEY_HERE
+launchctl setenv MUMO_API_KEY mmo_live_YOUR_KEY_HERE
 ```
 
-Add it to your shell profile (`.zshrc`, `.bashrc`, etc.) so Codex picks it up across sessions.
+Optional: also add `export MUMO_API_KEY=mmo_live_YOUR_KEY_HERE` to `~/.zshrc` if you want terminal sessions to have the key too.
 
 ### 3. Install the plugin
 

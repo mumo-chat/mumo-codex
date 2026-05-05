@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 — 2026-05-05
+
+macOS GUI-launch fix in setup docs. Pure documentation; no skill or manifest behavior change.
+
+- **README + SKILL.md:** `launchctl setenv MUMO_API_KEY ...` is now the canonical macOS step. Shell `export` is documented as optional, "if you want terminal sessions to have the key too." Mirrors the same fix the mumo-cursor install flow already uses. Reason: macOS GUI apps launched from Finder/Dock/Spotlight don't inherit shell environment variables, so a Codex IDE extension launched from Finder couldn't see a `MUMO_API_KEY` set only via `~/.zshrc`. `launchctl setenv` puts it in the launchd session that all GUI apps inherit.
+
 ## 0.1.0 — 2026-05-05
 
 Initial release. Codex plugin for mumo's MCP server.
