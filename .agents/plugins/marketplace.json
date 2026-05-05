@@ -2,7 +2,7 @@
   "name": "mumo",
   "interface": {
     "displayName": "mumo",
-    "shortDescription": "Multi-model deliberation panel for high-regret decisions",
+    "shortDescription": "Multi-model deliberation panel. Diverse AI voices on contested decisions.",
     "developerName": "mumo",
     "websiteURL": "https://mumo.chat"
   },

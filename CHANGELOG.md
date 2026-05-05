@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.3 — 2026-05-05
+
+End-to-end install confirmed: marketplace discovery, plugin install via in-session `/plugins`, skill loading, MCP server registration, and `list_models` round-trip all working. This release locks in copy + branding for the install card and rewrites the README install flow to reflect what actually works.
+
+- **Logo** added at `plugins/mumo/assets/logo.png` (sourced from mumo-cursor). `interface.logo` and `interface.composerIcon` in `plugin.json` now point at it; previously the install card showed Codex's generic placeholder.
+- **Copy revised for IDE-native audience.** Codex is the agent, so the prior "your local agent is decision-bound by its backbone model" framing (carried over from the Hermes kernel) was sideways. Now: short description matches the mumo-mcp / mumo-cursor family tagline ("Multi-model deliberation panel. Diverse AI voices on contested decisions."); long description leads with "When Codex is about to make an architecture choice..."; default prompt is "Have mumo pressure-test this design before I commit." (sharper, code-task-flavored, matches the prompt-chip pattern in OpenAI's bundled plugins).
+- **Marketplace.json shortDescription** aligned with plugin.json so the install card and the marketplace catalog show consistent copy.
+- **README install flow rewritten** to match what actually unblocked end-to-end install: `/plugins` is invoked **inside a live Codex session** (not as a top-level subcommand); user picks the mumo marketplace tab, selects mumo, hits Enter, chooses "Install plugin." Step 5 is "restart or new thread." Step 6 is now an explicit low-cost verification — `codex mcp list` or "Ask mumo to list available models" — before running a real (credit-consuming) deliberation.
+- **Author block** now includes `url: "https://mumo.chat"` matching the family convention.
+- **Keywords** broadened from `[deliberation, multi-model, mcp, decision-support, agents]` to the family-shared list `[mcp, deliberation, multi-model, claude, gpt, gemini, panel, architecture, design-review, code-review]`.
+
+Honest postmortem on what unblocked discovery: somewhere across v0.3.0 → v0.3.2 + the in-session `/plugins` realization, mumo became visible. Most plausible single contributor: v0.3.2's restoration of `mcpServers: "./.mcp.json"` in `plugin.json` (which v0.3.1 had removed based on `browser-use` not having it; turns out `computer-use` does, and apparently Codex needs the explicit pointer to attach the MCP server). But the move-to-`plugins/<name>/` (v0.3.0) and `author` object shape (v0.3.1) and `defaultPrompt` array (v0.3.0) were all real shape diffs from canonical too. Not isolating further; leaving the postmortem honest.
+
 ## 0.3.2 — 2026-05-05
 
 Manifest fix from comparing against OpenAI's bundled `computer-use` plugin. `plugin.json` now points at the root `.mcp.json` via `mcpServers: "./.mcp.json"`; without that pointer, Codex can discover the plugin shell but may not attach the MCP server/tools.

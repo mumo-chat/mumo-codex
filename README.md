@@ -1,6 +1,6 @@
 # mumo — Codex plugin
 
-**Multi-model deliberation for OpenAI Codex.** When your Codex agent is decision-bound by its backbone model's confidence, mumo gives it on-demand access to a panel of frontier models — Claude, GPT, Gemini, Grok, Qwen, Kimi, GLM — for the hard calls.
+**Multi-model deliberation panel for OpenAI Codex.** When Codex is about to make an architecture choice, design tradeoff, or security-sensitive change you want a second opinion on, mumo runs a panel of frontier models in parallel — Claude, GPT, Gemini, Grok, Qwen, Kimi, GLM — and returns a cross-model claim map showing where they agree and where they split.
 
 For Claude Code, see [`mumo-chat/mumo-mcp`](https://github.com/mumo-chat/mumo-mcp). For Cursor, see [`mumo-chat/mumo-cursor`](https://github.com/mumo-chat/mumo-cursor). For VS Code, see [`mumo-chat/mumo-vscode`](https://github.com/mumo-chat/mumo-vscode). For Hermes Agent, see [`mumo-chat/mumo-hermes`](https://github.com/mumo-chat/mumo-hermes).
 
@@ -52,17 +52,23 @@ codex plugin marketplace add ./mumo-codex
 
 This adds `[marketplaces.mumo]` to `~/.codex/config.toml`. **Adding the marketplace does not auto-enable the plugin** — that's the next step.
 
-### 4. Enable the mumo plugin
+### 4. Install the mumo plugin from inside Codex
 
-Open Codex's plugin browser and install/enable mumo from it:
+The plugin browser is interactive and lives inside a Codex session. Open Codex (`codex` to start a new session, or any active session), then run:
 
-```bash
-codex /plugins
+```
+/plugins
 ```
 
-When enabled, `~/.codex/config.toml` ends up with `[plugins."mumo@mumo"]` + `enabled = true`.
+In the plugin browser:
 
-**Fallback:** if the plugin browser isn't enabling mumo on your Codex build, you can register the MCP server directly. This gives you the seven mumo tools but skips the skill (the agent loses the deliberation-loop instructions and has to discover the tools on its own):
+1. Switch to the **mumo** marketplace tab (the marketplace you registered in step 3).
+2. Select **mumo**, press Enter.
+3. Choose **Install plugin**.
+
+When the install completes, `~/.codex/config.toml` ends up with `[plugins."mumo@mumo"]` + `enabled = true`, and the plugin's skill + MCP server are registered.
+
+**Fallback:** if the plugin browser flow isn't working on your Codex build, you can register the MCP server directly. This gives you the seven mumo tools but skips the skill (the agent loses the deliberation-loop instructions and has to discover the tools on its own):
 
 ```bash
 codex mcp add mumo \
@@ -70,9 +76,23 @@ codex mcp add mumo \
   --bearer-token-env-var MUMO_API_KEY
 ```
 
-### 5. Restart Codex
+### 5. Restart Codex (or start a new thread)
 
-Restart Codex (CLI or IDE extension) so the MCP server registers and `MUMO_API_KEY` propagates. After restart, the seven mumo tools become available: `create_deliberation`, `wait_for_round`, `append_round`, `get_session`, `list_sessions`, `list_models`, `get_credit`. Verify with `codex mcp list`.
+Start a new Codex thread (or fully restart Codex) so the freshly-installed MCP server attaches. After restart, the seven mumo tools become available: `create_deliberation`, `wait_for_round`, `append_round`, `get_session`, `list_sessions`, `list_models`, `get_credit`.
+
+### 6. Verify with a low-cost call
+
+Before running a full deliberation, smoke-test that auth and tool routing are working. Either run:
+
+```bash
+codex mcp list
+```
+
+…and confirm `mumo` is listed, or ask Codex in a thread:
+
+> Ask mumo to list available models.
+
+That hits `list_models` (read-only, no credit consumed). If it returns a list, you're ready to run a real deliberation.
 
 ## Using the panel
 
