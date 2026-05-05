@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.4 — 2026-05-05
+
+GUI-first install flow + skill subtitle alignment.
+
+- **README install step 4** rewritten to lead with the Codex desktop app flow (side nav → Plugins → publisher dropdown → select mumo → "+" on the plugin card → "Install mumo"). The CLI `/plugins` flow is now an alternative for headless / terminal-only workflows. Most users live in the GUI; the install card is cleaner there.
+- **`agents/openai.yaml` `short_description`** updated from "Multi-model deliberation panel for high-regret decisions" (Hermes-flavored, predated v0.3.3 copy revision) to "Multi-model deliberation panel. Diverse AI voices on contested decisions." Aligns the Skill subtitle in the install card's "Includes" section with the top-level plugin subtitle.
+
 ## 0.3.3 — 2026-05-05
 
 End-to-end install confirmed: marketplace discovery, plugin install via in-session `/plugins`, skill loading, MCP server registration, and `list_models` round-trip all working. This release locks in copy + branding for the install card and rewrites the README install flow to reflect what actually works.

@@ -1,6 +1,6 @@
 interface:
   display_name: "mumo"
-  short_description: "Multi-model deliberation panel for high-regret decisions"
+  short_description: "Multi-model deliberation panel. Diverse AI voices on contested decisions."
   brand_color: "#7C6F9F"
   default_prompt: "Ask mumo to compare the tradeoffs and tell me where the panel disagrees."
 

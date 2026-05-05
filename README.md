@@ -52,23 +52,21 @@ codex plugin marketplace add ./mumo-codex
 
 This adds `[marketplaces.mumo]` to `~/.codex/config.toml`. **Adding the marketplace does not auto-enable the plugin** — that's the next step.
 
-### 4. Install the mumo plugin from inside Codex
+### 4. Install the mumo plugin
 
-The plugin browser is interactive and lives inside a Codex session. Open Codex (`codex` to start a new session, or any active session), then run:
+**Recommended: install from the Codex app.** Most users live in the GUI, and the install card is cleaner there.
 
-```
-/plugins
-```
-
-In the plugin browser:
-
-1. Switch to the **mumo** marketplace tab (the marketplace you registered in step 3).
-2. Select **mumo**, press Enter.
-3. Choose **Install plugin**.
+1. Open the Codex desktop app.
+2. In the side nav, click **Plugins**.
+3. Click the publisher dropdown (defaults to **Built by OpenAI**) and select **mumo**.
+4. On the mumo plugin card under **Productivity**, click the **+** button.
+5. In the install dialog, click **Install mumo**.
 
 When the install completes, `~/.codex/config.toml` ends up with `[plugins."mumo@mumo"]` + `enabled = true`, and the plugin's skill + MCP server are registered.
 
-**Fallback:** if the plugin browser flow isn't working on your Codex build, you can register the MCP server directly. This gives you the seven mumo tools but skips the skill (the agent loses the deliberation-loop instructions and has to discover the tools on its own):
+**CLI alternative.** If you're working headless or prefer the terminal, the plugin browser is also available inside any Codex CLI session. Start a session (`codex`), then run `/plugins`, switch to the mumo marketplace tab, select mumo, press Enter, and choose **Install plugin**.
+
+**Fallback:** if neither the app nor the CLI plugin browser is enabling mumo on your Codex build, you can register the MCP server directly. This gives you the seven mumo tools but skips the skill (the agent loses the deliberation-loop instructions and has to discover the tools on its own):
 
 ```bash
 codex mcp add mumo \
