@@ -2,8 +2,6 @@
 
 **Multi-model deliberation panel for OpenAI Codex.** When Codex is about to make an architecture choice, design tradeoff, or security-sensitive change you want a second opinion on, mumo runs a panel of frontier models in parallel — Claude, GPT, Gemini, Grok, Qwen, Kimi, GLM — and returns a cross-model claim map showing where they agree and where they split.
 
-For Claude Code, see [`mumo-chat/mumo-mcp`](https://github.com/mumo-chat/mumo-mcp). For Cursor, see [`mumo-chat/mumo-cursor`](https://github.com/mumo-chat/mumo-cursor). For VS Code, see [`mumo-chat/mumo-vscode`](https://github.com/mumo-chat/mumo-vscode). For Hermes Agent, see [`mumo-chat/mumo-hermes`](https://github.com/mumo-chat/mumo-hermes).
-
 ## What's in the box
 
 - **`.codex-plugin/plugin.json`** — Codex plugin manifest (name, version, MCP pointer, interface metadata).

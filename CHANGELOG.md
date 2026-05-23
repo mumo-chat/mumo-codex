@@ -1,22 +1,26 @@
 # Changelog
 
+## 0.3.5 — 2026-05-22
+
+README update.
+
 ## 0.3.4 — 2026-05-05
 
 GUI-first install flow + skill subtitle alignment.
 
 - **README install step 4** rewritten to lead with the Codex desktop app flow (side nav → Plugins → publisher dropdown → select mumo → "+" on the plugin card → "Install mumo"). The CLI `/plugins` flow is now an alternative for headless / terminal-only workflows. Most users live in the GUI; the install card is cleaner there.
-- **`agents/openai.yaml` `short_description`** updated from "Multi-model deliberation panel for high-regret decisions" (Hermes-flavored, predated v0.3.3 copy revision) to "Multi-model deliberation panel. Diverse AI voices on contested decisions." Aligns the Skill subtitle in the install card's "Includes" section with the top-level plugin subtitle.
+- **`agents/openai.yaml` `short_description`** updated to "Multi-model deliberation panel. Diverse AI voices on contested decisions." Aligns the Skill subtitle in the install card's "Includes" section with the top-level plugin subtitle.
 
 ## 0.3.3 — 2026-05-05
 
 End-to-end install confirmed: marketplace discovery, plugin install via in-session `/plugins`, skill loading, MCP server registration, and `list_models` round-trip all working. This release locks in copy + branding for the install card and rewrites the README install flow to reflect what actually works.
 
-- **Logo** added at `plugins/mumo/assets/logo.png` (sourced from mumo-cursor). `interface.logo` and `interface.composerIcon` in `plugin.json` now point at it; previously the install card showed Codex's generic placeholder.
-- **Copy revised for IDE-native audience.** Codex is the agent, so the prior "your local agent is decision-bound by its backbone model" framing (carried over from the Hermes kernel) was sideways. Now: short description matches the mumo-mcp / mumo-cursor family tagline ("Multi-model deliberation panel. Diverse AI voices on contested decisions."); long description leads with "When Codex is about to make an architecture choice..."; default prompt is "Have mumo pressure-test this design before I commit." (sharper, code-task-flavored, matches the prompt-chip pattern in OpenAI's bundled plugins).
+- **Logo** added at `plugins/mumo/assets/logo.png`. `interface.logo` and `interface.composerIcon` in `plugin.json` now point at it; previously the install card showed Codex's generic placeholder.
+- **Copy revised for IDE-native audience.** Short description: "Multi-model deliberation panel. Diverse AI voices on contested decisions." Long description leads with "When Codex is about to make an architecture choice..." Default prompt is "Have mumo pressure-test this design before I commit." (sharper, code-task-flavored, matches the prompt-chip pattern in OpenAI's bundled plugins).
 - **Marketplace.json shortDescription** aligned with plugin.json so the install card and the marketplace catalog show consistent copy.
 - **README install flow rewritten** to match what actually unblocked end-to-end install: `/plugins` is invoked **inside a live Codex session** (not as a top-level subcommand); user picks the mumo marketplace tab, selects mumo, hits Enter, chooses "Install plugin." Step 5 is "restart or new thread." Step 6 is now an explicit low-cost verification — `codex mcp list` or "Ask mumo to list available models" — before running a real (credit-consuming) deliberation.
-- **Author block** now includes `url: "https://mumo.chat"` matching the family convention.
-- **Keywords** broadened from `[deliberation, multi-model, mcp, decision-support, agents]` to the family-shared list `[mcp, deliberation, multi-model, claude, gpt, gemini, panel, architecture, design-review, code-review]`.
+- **Author block** now includes `url: "https://mumo.chat"`.
+- **Keywords** broadened to `[mcp, deliberation, multi-model, claude, gpt, gemini, panel, architecture, design-review, code-review]`.
 
 Honest postmortem on what unblocked discovery: somewhere across v0.3.0 → v0.3.2 + the in-session `/plugins` realization, mumo became visible. Most plausible single contributor: v0.3.2's restoration of `mcpServers: "./.mcp.json"` in `plugin.json` (which v0.3.1 had removed based on `browser-use` not having it; turns out `computer-use` does, and apparently Codex needs the explicit pointer to attach the MCP server). But the move-to-`plugins/<name>/` (v0.3.0) and `author` object shape (v0.3.1) and `defaultPrompt` array (v0.3.0) were all real shape diffs from canonical too. Not isolating further; leaving the postmortem honest.
 
@@ -43,7 +47,6 @@ Three structural fixes from inspecting OpenAI's bundled marketplace at `~/.codex
 - **`source.path` now `./plugins/mumo`** to match the new layout (and OpenAI's convention).
 - **`.mcp.json` now wraps in `mcpServers`.** Was `{"mumo": {...}}`, now `{"mcpServers": {"mumo": {...}}}`. The Codex docs showed both forms; the bundled examples uniformly use the wrapped form.
 - **`interface.defaultPrompt` is an array.** Was a string; OpenAI bundled manifests use an array. Codex may accept the string but matching the canonical shape removes a guessing axis.
-- **NOT switching to `.claude-plugin/`.** Codex tries to parse Claude Code marketplaces but logs `unsupported source` for several entries. Claude shape is back-compat, not native. We stay on `.codex-plugin/plugin.json`.
 
 ## 0.2.2 — 2026-05-05
 
@@ -76,7 +79,7 @@ Setup-doc fix and version reconciliation.
 
 macOS GUI-launch fix in setup docs. Pure documentation; no skill or manifest behavior change.
 
-- **README + SKILL.md:** `launchctl setenv MUMO_API_KEY ...` is now the canonical macOS step. Shell `export` is documented as optional, "if you want terminal sessions to have the key too." Mirrors the same fix the mumo-cursor install flow already uses. Reason: macOS GUI apps launched from Finder/Dock/Spotlight don't inherit shell environment variables, so a Codex IDE extension launched from Finder couldn't see a `MUMO_API_KEY` set only via `~/.zshrc`. `launchctl setenv` puts it in the launchd session that all GUI apps inherit.
+- **README + SKILL.md:** `launchctl setenv MUMO_API_KEY ...` is now the canonical macOS step. Shell `export` is documented as optional, "if you want terminal sessions to have the key too." Reason: macOS GUI apps launched from Finder/Dock/Spotlight don't inherit shell environment variables, so a Codex IDE extension launched from Finder couldn't see a `MUMO_API_KEY` set only via `~/.zshrc`. `launchctl setenv` puts it in the launchd session that all GUI apps inherit.
 
 ## 0.1.0 — 2026-05-05
 
@@ -89,5 +92,3 @@ Initial release. Codex plugin for mumo's MCP server.
 - `skills/mumo/playbooks/` — four cognitive-shape playbooks: `contested-decision`, `design-review`, `uncertainty-expansion`, `red-team`.
 - `skills/mumo/references/` — five reference docs: `claim-maps`, `snippets`, `model-selection`, `synthesis`, `operating-notes`.
 - README install steps: export `MUMO_API_KEY`, run `codex plugin marketplace add github:mumo-chat/mumo-codex`, restart Codex.
-
-Derived from the v0.2.x skill kernel that originated in mumo-mcp and mumo-cursor and was adapted for Hermes in mumo-hermes. Codex's plugin format (manifest + `.mcp.json` + skills + Codex-native YAML sidecar) is closest to mumo-mcp; the HTTP transport uses Codex's `bearer_token_env_var` env-var pointer rather than a literal Bearer header in YAML, so the API key lives in the user's shell environment, not in any committed config file.
