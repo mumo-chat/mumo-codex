@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.0 — 2026-09-08
+
+Coordinated client release rendered from the mumo-mcp 0.6.0 baseline.
+
+- `.mcp.json` `enabled_tools` gains `share_session` — the tool was registered on the server but filtered out by the allowlist until now.
+- `SKILL.md`: `share_session` in the tools table; `wait_for_round` one-id form; intro names the current model families and the typed cross-model reactions.
+- `references/operating-notes.md` re-synced with the baseline.
+- README tool list and intro updated.
+
 ## 0.5.0 — 2026-07-04
 
 Reaction-visibility model + per-round Takeaway.

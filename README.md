@@ -1,6 +1,6 @@
 # mumo — Codex plugin
 
-**Multi-model deliberation panel for OpenAI Codex.** When Codex is about to make an architecture choice, design tradeoff, or security-sensitive change you want a second opinion on, mumo runs a panel of frontier models in parallel — Claude, GPT, Gemini, Grok, Qwen, Kimi, GLM — and returns a cross-model claim map showing where they agree and where they split.
+**Multi-model deliberation panel for OpenAI Codex.** When Codex is about to make an architecture choice, design tradeoff, or security-sensitive change worth checking across labs, mumo runs a panel of frontier models in parallel — Claude, GPT, Gemini, Grok, DeepSeek, Kimi, and more — and returns each model's full response plus typed cross-model reactions — what each model keeps, challenges, or wants explored in the others' claims.
 
 ## What's in the box
 
@@ -64,7 +64,7 @@ When the install completes, `~/.codex/config.toml` ends up with `[plugins."mumo@
 
 **CLI alternative.** If you're working headless or prefer the terminal, the plugin browser is also available inside any Codex CLI session. Start a session (`codex`), then run `/plugins`, switch to the mumo marketplace tab, select mumo, press Enter, and choose **Install plugin**.
 
-**Fallback:** if neither the app nor the CLI plugin browser is enabling mumo on your Codex build, you can register the MCP server directly. This gives you the seven mumo tools but skips the skill (the agent loses the deliberation-loop instructions and has to discover the tools on its own):
+**Fallback:** if neither the app nor the CLI plugin browser is enabling mumo on your Codex build, you can register the MCP server directly. This gives you the eight mumo tools but skips the skill (the agent loses the deliberation-loop instructions and has to discover the tools on its own):
 
 ```bash
 codex mcp add mumo \
@@ -74,7 +74,7 @@ codex mcp add mumo \
 
 ### 5. Restart Codex (or start a new thread)
 
-Start a new Codex thread (or fully restart Codex) so the freshly-installed MCP server attaches. After restart, the seven mumo tools become available: `create_deliberation`, `wait_for_round`, `append_round`, `get_session`, `list_sessions`, `list_models`, `get_credit`.
+Start a new Codex thread (or fully restart Codex) so the freshly-installed MCP server attaches. After restart, the eight mumo tools become available: `create_deliberation`, `wait_for_round`, `append_round`, `get_session`, `list_sessions`, `list_models`, `share_session`, `get_credit`.
 
 ### 6. Verify with a low-cost call
 
