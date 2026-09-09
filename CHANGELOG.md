@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.1 — 2026-09-09
+
+Listing polish only; no change to the skill or the MCP server config.
+
+- `interface.screenshots` now carries two real images (a claim map with typed cross-model reactions, and a round of responses) instead of an empty array.
+- `homepage` points at the Codex install walkthrough, `https://mumo.chat/install/codex`, rather than the site root.
+
 ## 0.6.0 — 2026-09-08
 
 Coordinated client release rendered from the mumo-mcp 0.6.0 baseline.

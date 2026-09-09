@@ -1,13 +1,13 @@
 {
   "name": "mumo",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Multi-model deliberation panel. Diverse AI voices + claim-level reactions on contested decisions.",
   "author": {
     "name": "mumo",
     "url": "https://mumo.chat"
   },
   "license": "MIT",
-  "homepage": "https://mumo.chat",
+  "homepage": "https://mumo.chat/install/codex",
   "repository": "https://github.com/mumo-chat/mumo-codex",
   "keywords": ["deliberation", "multi-model", "mcp", "claude", "gpt", "gemini", "panel", "architecture", "design-review", "code-review"],
   "skills": "./skills/",
@@ -27,6 +27,9 @@
     "defaultPrompt": [
       "Have mumo pressure-test this design before I commit."
     ],
-    "screenshots": []
+    "screenshots": [
+      "./assets/screenshot-claim-map.png",
+      "./assets/screenshot-rounds.png"
+    ]
   }
 }
