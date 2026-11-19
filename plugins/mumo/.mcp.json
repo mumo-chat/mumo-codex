@@ -5,6 +5,7 @@
       "bearer_token_env_var": "MUMO_API_KEY",
       "enabled_tools": [
         "create_deliberation",
+        "ask_a_model",
         "wait_for_round",
         "append_round",
         "get_session",

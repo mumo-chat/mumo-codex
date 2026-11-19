@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.0 — 2026-11-19
+
+Coordinated client release rendered from the mumo-mcp 0.7.0 baseline.
+
+- New tool: `ask_a_model` puts a question to one model of your choice and returns one answer, with no cross-model reactions or claim map. It is added to `enabled_tools` in `.mcp.json`; without that entry Codex cannot call it, so re-install or update the plugin to get it.
+- `SKILL.md` has a new section on when to use `ask_a_model` and when to use `create_deliberation` instead.
+- `SKILL.md` now tells the agent to surface each round's `web_url`. `claim_map_url` still works and carries the same value.
+- README tool list updated.
+
 ## 0.6.1 — 2026-09-09
 
 Listing polish only; no change to the skill or the MCP server config.

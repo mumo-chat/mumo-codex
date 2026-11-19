@@ -74,7 +74,7 @@ codex mcp add mumo \
 
 ### 5. Restart Codex (or start a new thread)
 
-Start a new Codex thread (or fully restart Codex) so the freshly-installed MCP server attaches. After restart, the mumo tools become available: `create_deliberation`, `wait_for_round`, `append_round`, `get_session`, `list_sessions`, `list_models`, `share_session`, `get_credit`.
+Start a new Codex thread (or fully restart Codex) so the freshly-installed MCP server attaches. After restart, the mumo tools become available: `create_deliberation`, `ask_a_model`, `wait_for_round`, `append_round`, `get_session`, `list_sessions`, `list_models`, `share_session`, `get_credit`.
 
 ### 6. Verify with a low-cost call
 
