@@ -6,10 +6,10 @@
 
 - **`.codex-plugin/plugin.json`** — Codex plugin manifest (name, version, MCP pointer, interface metadata).
 - **`.mcp.json`** — mumo MCP server config (HTTP transport against `https://mumo.chat/api/mcp`, reads `MUMO_API_KEY` from the environment).
-- **`skills/mumo/SKILL.md`** — the canonical skill teaching Codex how to use mumo: when to invoke, the deliberation loop (create → wait → read → snippet → append/stop), how to read claim maps, snippet doctrine, and when to verify session creation.
+- **`skills/mumo/SKILL.md`** — the canonical skill teaching Codex how to use mumo: when to invoke, the deliberation loop (create → wait → read → summarize → append/stop), how to read the reactions, how to write your own, and when to verify session creation.
 - **`skills/mumo/agents/openai.yaml`** — Codex-native skill metadata (display name, brand color, MCP dependency declaration, implicit-invocation policy).
 - **`skills/mumo/playbooks/`** — four cognitive-shape playbooks loaded on demand: `contested-decision`, `design-review`, `uncertainty-expansion`, `red-team`.
-- **`skills/mumo/references/`** — five reference docs: `claim-maps`, `snippets`, `model-selection`, `synthesis`, `operating-notes`.
+- **`skills/mumo/references/`** — six reference docs: `reading-reactions`, `writing-reactions`, `model-selection`, `synthesis`, `takeaway`, `operating-notes`.
 
 ## Install
 
@@ -96,7 +96,7 @@ In a Codex session, name `mumo` explicitly the first time so the agent reaches f
 
 > Ask mumo to compare Postgres and MongoDB for our event store given 50k events/day, a Postgres-experienced team, and a 3-month runway. What would we regret 6 months in?
 
-Codex calls `create_deliberation`, then `wait_for_round`. The completed round returns each model's prose plus a cross-model claim map showing where the panel agrees and where it splits. The skill teaches Codex to read the claim map first, then react with typed snippets (KEEP / EXPLORE / CHALLENGE / CORE / SHIFT) and either append a follow-up round or stop and synthesize for you.
+Codex calls `create_deliberation`, then `wait_for_round`. The completed round returns each model's response plus the models' reactions to each other's claims, showing where the panel agrees and where it splits. The skill teaches Codex to read the reactions first and summarize the round for you, then, if you want another round, append one steered with its own typed reactions (KEEP / EXPLORE / CHALLENGE / CORE / SHIFT).
 
 ## When mumo is worth the latency tax
 
