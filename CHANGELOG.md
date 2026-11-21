@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1 — 2026-11-21
+
+- The plugin now connects with a browser sign-in. It no longer reads `MUMO_API_KEY`. After installing or updating, run `codex mcp login mumo` and allow access in the browser.
+- The bundled MCP server address is now `https://mumo.chat/api/mcp/oauth`. The tools, billing and limits are the same.
+- If you are updating from an earlier version, sign in once. The environment variable is no longer used by the plugin; the key stays valid on your account until you revoke it.
+- To keep using an API key (CI, unattended agents), register the key server directly with `codex mcp add`; the README has the command.
+- `SKILL.md` setup text, the skill's `agents/openai.yaml` server address and the README updated to match.
+
 ## 0.8.0 — 2026-11-20
 
 Coordinated client release rendered from the mumo-mcp 0.8.0 baseline.

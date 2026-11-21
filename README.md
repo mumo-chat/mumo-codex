@@ -5,7 +5,7 @@
 ## What's in the box
 
 - **`.codex-plugin/plugin.json`** — Codex plugin manifest (name, version, MCP pointer, interface metadata).
-- **`.mcp.json`** — mumo MCP server config (HTTP transport against `https://mumo.chat/api/mcp`, reads `MUMO_API_KEY` from the environment).
+- **`.mcp.json`** — mumo MCP server config (HTTP transport against `https://mumo.chat/api/mcp/oauth`, connected with a browser sign-in; no API key).
 - **`skills/mumo/SKILL.md`** — the canonical skill teaching Codex how to use mumo: when to invoke, the deliberation loop (create → wait → read → summarize → append/stop), how to read the reactions, how to write your own, and when to verify session creation.
 - **`skills/mumo/agents/openai.yaml`** — Codex-native skill metadata (display name, brand color, MCP dependency declaration, implicit-invocation policy).
 - **`skills/mumo/playbooks/`** — four cognitive-shape playbooks loaded on demand: `contested-decision`, `design-review`, `uncertainty-expansion`, `red-team`.
@@ -13,21 +13,9 @@
 
 ## Install
 
-### 1. Get an API key
+You need a mumo account; sign up at [mumo.chat](https://mumo.chat) (every account gets free credit each month). No API key and no environment variable.
 
-Sign up at [mumo.chat](https://mumo.chat) and create a platform key at [Settings → API Keys](https://mumo.chat/settings/api-keys). Keys start with `mmo_live_`.
-
-### 2. Set MUMO_API_KEY for Codex
-
-The plugin's `.mcp.json` declares `bearer_token_env_var: MUMO_API_KEY`, which tells Codex to read the token from your environment. On macOS, set it from Terminal so the Codex IDE extension launched from Finder/Dock inherits it (GUI apps don't read your shell profile):
-
-```bash
-launchctl setenv MUMO_API_KEY mmo_live_YOUR_KEY_HERE
-```
-
-Optional: also add `export MUMO_API_KEY=mmo_live_YOUR_KEY_HERE` to `~/.zshrc` if you want terminal sessions to have the key too.
-
-### 3. Add the mumo marketplace
+### 1. Add the mumo marketplace
 
 If you don't have the Codex CLI yet, install it from npm:
 
@@ -50,9 +38,15 @@ codex plugin marketplace add ./mumo-codex
 
 This adds `[marketplaces.mumo]` to `~/.codex/config.toml`. **Adding the marketplace does not auto-enable the plugin** — that's the next step.
 
-### 4. Install the mumo plugin
+### 2. Install the mumo plugin
 
-**Recommended: install from the Codex app.** Most users live in the GUI, and the install card is cleaner there.
+From a terminal:
+
+```bash
+codex plugin add mumo@mumo
+```
+
+**Or install from the Codex app:**
 
 1. Open the Codex desktop app.
 2. In the side nav, click **Plugins**.
@@ -62,9 +56,41 @@ This adds `[marketplaces.mumo]` to `~/.codex/config.toml`. **Adding the marketpl
 
 When the install completes, `~/.codex/config.toml` ends up with `[plugins."mumo@mumo"]` + `enabled = true`, and the plugin's skill + MCP server are registered.
 
-**CLI alternative.** If you're working headless or prefer the terminal, the plugin browser is also available inside any Codex CLI session. Start a session (`codex`), then run `/plugins`, switch to the mumo marketplace tab, select mumo, press Enter, and choose **Install plugin**.
+The plugin browser is also available inside a Codex CLI session: run `/plugins`, switch to the mumo marketplace tab, select mumo, press Enter, and choose **Install plugin**.
 
-**Fallback:** if neither the app nor the CLI plugin browser is enabling mumo on your Codex build, you can register the MCP server directly. This gives you the mumo tools but skips the skill (the agent loses the deliberation-loop instructions and has to discover the tools on its own):
+### 3. Sign in to mumo
+
+From a terminal:
+
+```bash
+codex mcp login mumo
+```
+
+1. Your browser opens to **Connect Codex to mumo**. Sign in to mumo if asked, confirm your account, and click **Continue**.
+2. On the consent screen, click **Allow access**. The screen shows an address on this computer (`127.0.0.1`): that is Codex waiting for the sign-in to finish.
+3. When the browser says authentication is complete, close the tab.
+
+Codex stores the sign-in and renews it. To disconnect later, run `codex mcp logout mumo`, or remove **Codex** under **Settings → API Keys → Connected apps** at [mumo.chat/settings/api-keys](https://mumo.chat/settings/api-keys).
+
+### 4. Start a new thread and verify
+
+Start a new Codex thread (or restart Codex) so the server attaches. The mumo tools become available: `create_deliberation`, `ask_a_model`, `wait_for_round`, `append_round`, `get_session`, `list_sessions`, `list_models`, `share_session`, `get_credit`.
+
+Check the sign-in:
+
+```bash
+codex mcp list
+```
+
+`mumo` should show `OAuth` in the Auth column. Then ask Codex in a thread:
+
+> Ask mumo to list available models.
+
+That hits `list_models` (read-only, no credit consumed). If it returns a list, you're ready to run a real deliberation.
+
+### Using an API key instead
+
+For CI or an unattended agent, skip the plugin and register the key server directly, with a key from [Settings → API Keys](https://mumo.chat/settings/api-keys) (keys start with `mmo_live_`) exported as `MUMO_API_KEY`:
 
 ```bash
 codex mcp add mumo \
@@ -72,23 +98,11 @@ codex mcp add mumo \
   --bearer-token-env-var MUMO_API_KEY
 ```
 
-### 5. Restart Codex (or start a new thread)
+This gives you the tools without the plugin's skill. On macOS, a Codex app launched from Finder or the Dock does not read your shell profile, so also run `launchctl setenv MUMO_API_KEY "$MUMO_API_KEY"`.
 
-Start a new Codex thread (or fully restart Codex) so the freshly-installed MCP server attaches. After restart, the mumo tools become available: `create_deliberation`, `ask_a_model`, `wait_for_round`, `append_round`, `get_session`, `list_sessions`, `list_models`, `share_session`, `get_credit`.
+### Upgrading from 0.8.0 or earlier
 
-### 6. Verify with a low-cost call
-
-Before running a full deliberation, smoke-test that auth and tool routing are working. Either run:
-
-```bash
-codex mcp list
-```
-
-…and confirm `mumo` is listed, or ask Codex in a thread:
-
-> Ask mumo to list available models.
-
-That hits `list_models` (read-only, no credit consumed). If it returns a list, you're ready to run a real deliberation.
+Earlier versions read `MUMO_API_KEY` from your environment. From 0.8.1 the plugin signs in instead, so after updating, run `codex mcp login mumo` once. The environment variable is no longer used by the plugin and can be removed; the key stays valid on your account until you revoke it.
 
 ## Using the panel
 

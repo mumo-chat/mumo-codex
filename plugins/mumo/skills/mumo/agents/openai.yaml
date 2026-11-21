@@ -13,4 +13,4 @@ dependencies:
       value: "mumo"
       description: "mumo deliberation server — multi-model panel via Streamable HTTP"
       transport: "streamable_http"
-      url: "https://mumo.chat/api/mcp"
+      url: "https://mumo.chat/api/mcp/oauth"
