@@ -1,8 +1,7 @@
 {
   "mcpServers": {
     "mumo": {
-      "url": "https://mumo.chat/api/mcp",
-      "bearer_token_env_var": "MUMO_API_KEY",
+      "url": "https://mumo.chat/api/mcp/oauth",
       "enabled_tools": [
         "create_deliberation",
         "ask_a_model",

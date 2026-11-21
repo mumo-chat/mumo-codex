@@ -1,6 +1,6 @@
 ---
 name: mumo
-description: Runs a multi-model deliberation across models from different labs (Claude, GPT, Gemini, Grok, DeepSeek, Kimi, and more) via mumo's MCP server, returning full responses plus typed cross-model reactions. Use when independent perspectives are needed on architecture/product decisions, design and plan review before implementation, pre-launch pressure tests, tradeoffs with multiple defensible framings, or explicit user requests for a mumo panel. Especially valuable for pre-implementation review of anything touching auth, security, tokens, payments, data exposure, or migrations. Requires a mumo platform API key exported as MUMO_API_KEY.
+description: Runs a multi-model deliberation across models from different labs (Claude, GPT, Gemini, Grok, DeepSeek, Kimi, and more) via mumo's MCP server, returning full responses plus typed cross-model reactions. Use when independent perspectives are needed on architecture/product decisions, design and plan review before implementation, pre-launch pressure tests, tradeoffs with multiple defensible framings, or explicit user requests for a mumo panel. Especially valuable for pre-implementation review of anything touching auth, security, tokens, payments, data exposure, or migrations. Connects with a mumo sign-in (`codex mcp login mumo`).
 ---
 
 # mumo
@@ -9,9 +9,9 @@ mumo runs a deliberation across models from different labs (Claude, GPT, Gemini,
 
 ## Setup
 
-The mumo MCP server is bundled with this plugin (`.mcp.json` at the plugin root). It uses HTTP transport against `https://mumo.chat/api/mcp` and reads `MUMO_API_KEY` from the environment.
+The mumo MCP server is bundled with this plugin (`.mcp.json` at the plugin root). It uses HTTP transport against `https://mumo.chat/api/mcp/oauth` and connects with a browser sign-in; no API key is required.
 
-If tools return auth errors, the user needs a key. Direct them to https://mumo.chat/settings/api-keys (keys start with `mmo_live_`). On macOS they should set it via `launchctl setenv MUMO_API_KEY mmo_live_...` so the Codex IDE extension launched from Finder/Dock inherits it (GUI apps don't read shell profiles). For terminal-only Codex CLI use, `export MUMO_API_KEY=mmo_live_...` in their shell is enough. Either way, **restart Codex** so the env var propagates to the MCP server.
+If the server is not signed in or tools return auth errors, ask the user to sign in from a terminal with `codex mcp login mumo`, allow access in the browser, then start a new Codex thread. `codex mcp list` shows `OAuth` in the Auth column once it is signed in.
 
 ## When to use
 
