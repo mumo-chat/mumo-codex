@@ -1,8 +1,8 @@
 interface:
   display_name: "mumo"
-  short_description: "Multi-model deliberation panel. Diverse AI voices on contested decisions."
+  short_description: "Claude, Gemini & more weigh in"
   brand_color: "#7C6F9F"
-  default_prompt: "Ask mumo to compare the tradeoffs and tell me where the panel disagrees."
+  default_prompt: "Ask me to paste an answer I don't trust, then use mumo to check it for errors, hidden assumptions and missing caveats."
 
 policy:
   allow_implicit_invocation: true
