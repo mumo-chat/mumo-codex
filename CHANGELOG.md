@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.2 — 2026-11-25
+
+Listing details for the ChatGPT and Codex plugin directory. The skill, the tools and the server address are unchanged.
+
+- New subtitle: "Claude, Gemini & more weigh in".
+- New long description. It covers what a panel is for, how long a round takes, sharing, which providers receive prompts, how connected-app sessions are used, and where mumo is available.
+- Three new starter prompts: a renting-vs-buying debate between Claude and Gemini, a stress test of your plan, and help choosing between options. The skill's starter now checks an answer you don't trust.
+- Added a support link (mumo.chat/support) and the keywords second-opinion, decision-making and red-team.
+- Added the review and publication details the directory asks for: test cases, no in-app purchases, and availability in the United States and Canada.
+
 ## 0.9.1 — 2026-11-24
 
 Skill notes for mumo MCP server 1.6.0.

@@ -1,6 +1,6 @@
 {
   "name": "mumo",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Multi-model deliberation panel. Diverse AI voices + claim-level reactions on contested decisions.",
   "author": {
     "name": "mumo",
@@ -9,27 +9,90 @@
   "license": "MIT",
   "homepage": "https://mumo.chat/install/codex",
   "repository": "https://github.com/mumo-chat/mumo-codex",
-  "keywords": ["deliberation", "multi-model", "mcp", "claude", "gpt", "gemini", "panel", "architecture", "design-review", "code-review"],
+  "keywords": ["deliberation", "multi-model", "mcp", "claude", "gpt", "gemini", "panel", "second-opinion", "decision-making", "red-team", "architecture", "design-review", "code-review"],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "mumo",
-    "shortDescription": "Multi-model deliberation panel. Diverse AI voices on contested decisions.",
-    "longDescription": "When Codex is about to make an architecture choice, design tradeoff, or security-sensitive change worth checking across labs, mumo runs a panel of frontier models in parallel — Claude, GPT, Gemini, Grok, DeepSeek, Kimi, and more — and returns each model's full response plus typed cross-model reactions: what each model keeps, challenges, or wants explored in the others' claims. Useful before commitment-grade decisions: architecture, design review, pre-commit review on risky diffs, stuck debugging, or anything where the cost of being wrong outweighs the cost of deliberation.",
+    "shortDescription": "Claude, Gemini & more weigh in",
+    "longDescription": "Run a panel of AI models, including Claude, Gemini and supported OpenAI models. Each answers the same question and reacts to the others' claims, so you can see where they agree and what still needs testing.\n\nUse it when being wrong costs more than a minute or two of waiting: a decision with real tradeoffs, a plan or draft you want pressure-tested, an architecture or design choice, or a question with no settled answer. You can also ask a single model for a second opinion.\n\nPanel rounds usually take a minute or two; timing varies by model and request. Completed rounds you can read include a link to the available answers and reactions. Your sessions are visible to you in mumo. If you create a share link, anyone with that link can read the shared snapshot.\n\nYour prompts are sent to the model providers that serve the models in your panel, and to other service providers when used; the full list is at mumo.chat/legal/providers. mumo processes connected-app requests to provide the service. Connected-app sessions are excluded from Platform Improvement and Dataset Contribution. The Privacy Policy describes retention, operational and safety practices.\n\nmumo is available in the United States and Canada, excluding Quebec. Your mumo account is created when you sign in. The Free plan includes some credit; current amounts are at mumo.chat/pricing.",
     "developerName": "mumo",
     "category": "Productivity",
     "capabilities": ["Interactive"],
     "websiteURL": "https://mumo.chat",
+    "supportURL": "https://mumo.chat/support",
     "privacyPolicyURL": "https://mumo.chat/legal/privacy",
     "termsOfServiceURL": "https://mumo.chat/legal/terms",
     "logo": "./assets/logo.png",
     "composerIcon": "./assets/logo.png",
     "defaultPrompt": [
-      "Have mumo pressure-test this design before I commit."
+      "Use mumo to have Claude and Gemini debate renting vs buying a home right now. Tell me where you agree and disagree with each.",
+      "Ask me to describe my plan, then use mumo to find the strongest reason it could fail and one cheap test I can run first.",
+      "Ask me what I'm choosing between and what matters most, then use mumo to compare the options and recommend one."
     ],
     "screenshots": [
       "./assets/screenshot-claim-map.png",
       "./assets/screenshot-rounds.png"
     ]
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Which models the account can use. A read-only question; no model call and no cost.",
+              "prompt": "Which models are available on mumo?",
+              "tools_triggered": "list_models",
+              "expected_behavior": "ChatGPT lists the models available on the account's Free plan, grouped by family, and the panel size the plan allows. Models outside the plan are shown as unavailable. ChatGPT does not start a checkout or ask the user to upgrade."
+            },
+            {
+              "description": "The account's remaining credit. A read-only question; no model call and no cost.",
+              "prompt": "How much mumo credit do I have left?",
+              "tools_triggered": "get_credit",
+              "expected_behavior": "ChatGPT reports the account's remaining mumo credit. No model is called and nothing is charged."
+            },
+            {
+              "description": "Recent sessions on the account. A read-only question; the review account holds completed sessions.",
+              "prompt": "What are the last 3 things I discussed with other models on mumo?",
+              "tools_triggered": "list_sessions",
+              "expected_behavior": "ChatGPT lists the account's three most recent mumo sessions, newest first, by title or topic. It does not open, share or change them."
+            },
+            {
+              "description": "A panel on a decision with real tradeoffs. The user names two model families; on the review account's Free plan, mumo seats a Gemini model and a Claude model the plan includes. Each model answers in full, then reacts to the other's claims.",
+              "prompt": "Our company is considering replacing annual reviews with quarterly peer feedback. What are the pros and cons? Ask Gemini and Claude too. Tell me where you agree and disagree.",
+              "tools_triggered": "create_deliberation, wait_for_round",
+              "expected_behavior": "mumo starts a panel with a Gemini model and a Claude model available on the account's plan. ChatGPT waits for the round; if it is still running, ChatGPT follows the returned poll action. ChatGPT summarizes the pros and cons the models raise, says where it agrees and disagrees with them, and includes the round's link. It does not start a second round unless the user asks."
+            },
+            {
+              "description": "Read back and share the latest session. The review account holds completed sessions, so this works as the first message of a new chat. Sharing is a write the user asks for explicitly.",
+              "prompt": "I want to share my most recent mumo session with someone. Can you grab me the link and a two-sentence summary?",
+              "tools_triggered": "list_sessions, get_session, share_session",
+              "expected_behavior": "ChatGPT finds the most recent session, reads it, and writes a two-sentence summary of what the models concluded. It creates a share link for that session only, returns it, and notes that anyone with the link can read it."
+            }
+          ],
+          "negative": [
+            {
+              "description": "A plain factual question that needs no panel. Expected: ChatGPT answers directly; no mumo tool call.",
+              "prompt": "What is the capital of Australia?"
+            },
+            {
+              "description": "A request to delete a session. The plugin has no delete tool, and no other tool should be used in its place. Expected: no mumo tool call; ChatGPT explains that sessions are deleted on mumo.chat.",
+              "prompt": "Delete our last mumo session."
+            },
+            {
+              "description": "A panel of models the account's Free plan cannot run. ChatGPT may check availability with list_models, or attempt the panel and receive mumo's in-band plan refusal. Expected: no session or round is created, no credit is charged, no other model runs in their place without the user's permission, and no model answers are fabricated. ChatGPT explains that the requested models aren't on the plan and offers models that are, without starting a checkout or pushing an upgrade.",
+              "prompt": "Which frontier lab currently has the best model? Debate with Gemini 4 Neon and Claude Opus 5.5."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "The plugin does not sell plans or credits, start subscriptions or upgrades, or process payments. It uses the entitlements of an existing mumo account. Tool results may show model availability, credit balances and usage costs. Some limit messages link to mumo's public plans page. Purchases, if any, take place separately on mumo's website."
+      },
+      "publication": {
+        "countries": ["US", "CA"],
+        "release_notes": "First listing in the ChatGPT and Codex plugin directory. Run a panel of AI models that answer the same question and react to each other's claims, or ask one model for a second opinion. Sign in with your mumo account; no API key needed."
+      }
+    }
   }
 }
